@@ -246,17 +246,25 @@ const actions = {
     }
   },
 
-  async approveAppointment({ commit }, appointmentId) {
+  async approveAppointment({ commit, state }, appointmentId) {
     try {
       commit('SET_LOADING', true)
       commit('CLEAR_ERROR')
       
-      const response = await axios.patch(`/appointments/${appointmentId}/approve`)
-      commit('UPDATE_APPOINTMENT', response.data.appointment)
+      // Mock approval - simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500))
       
-      return { success: true, appointment: response.data.appointment }
+      // Find and update the appointment
+      const appointment = state.appointments.find(apt => apt.id === appointmentId)
+      if (appointment) {
+        const updatedAppointment = { ...appointment, status: APPOINTMENT_STATUS.APPROVED }
+        commit('UPDATE_APPOINTMENT', updatedAppointment)
+        return { success: true, appointment: updatedAppointment }
+      } else {
+        throw new Error('Randevu bulunamadı')
+      }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Randevu onaylanırken hata oluştu'
+      const errorMessage = error.message || 'Randevu onaylanırken hata oluştu'
       commit('SET_ERROR', errorMessage)
       return { success: false, error: errorMessage }
     } finally {
@@ -264,17 +272,29 @@ const actions = {
     }
   },
 
-  async rejectAppointment({ commit }, { appointmentId, reason }) {
+  async rejectAppointment({ commit, state }, { appointmentId, reason }) {
     try {
       commit('SET_LOADING', true)
       commit('CLEAR_ERROR')
       
-      const response = await axios.patch(`/appointments/${appointmentId}/reject`, { reason })
-      commit('UPDATE_APPOINTMENT', response.data.appointment)
+      // Mock rejection - simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 500))
       
-      return { success: true, appointment: response.data.appointment }
+      // Find and update the appointment
+      const appointment = state.appointments.find(apt => apt.id === appointmentId)
+      if (appointment) {
+        const updatedAppointment = { 
+          ...appointment, 
+          status: APPOINTMENT_STATUS.REJECTED,
+          rejectionReason: reason
+        }
+        commit('UPDATE_APPOINTMENT', updatedAppointment)
+        return { success: true, appointment: updatedAppointment }
+      } else {
+        throw new Error('Randevu bulunamadı')
+      }
     } catch (error) {
-      const errorMessage = error.response?.data?.message || 'Randevu reddedilirken hata oluştu'
+      const errorMessage = error.message || 'Randevu reddedilirken hata oluştu'
       commit('SET_ERROR', errorMessage)
       return { success: false, error: errorMessage }
     } finally {
