@@ -1,29 +1,60 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+// src/router/index.js
 
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Login from "@/views/Login.vue";
+import UserLayout from "@/layouts/UserLayout.vue";
+import UserDashboard from "@/views/user/Dashboard.vue";
+Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path: "/",
+    name: "Login",
+    component: Login,
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
+    path: "/user",
+    component: UserLayout,
+    children: [
+      {
+        path: "dashboard",
+        name: "UserDashboard",
+        component: UserDashboard,
+      },
+      {
+        path: "/user/meetings",
+        name: "MeetingList",
+        component: () => import("@/views/user/MeetingList.vue"),
+        meta: { requiresAuth: true, role: "user" },
+      },
+      {
+        path: "history",
+        name: "History",
+        component: () => import("@/views/user/History.vue"),
+        meta: { requiresAuth: true, role: "user" },
+      },
+      {
+        path: "meeting-create",
+        name: "MeetingCreate",
+        component: () => import("@/views/user/MeetingCreate.vue"),
+        meta: { requiresAuth: true, role: "user" },
+      },
+    ],
+  },
+  
+
+];
+
+
+
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+  mode: "history",
+  
+  routes,
+});
 
-export default router
+
+export default router;
+
