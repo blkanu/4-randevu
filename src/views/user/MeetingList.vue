@@ -344,31 +344,53 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.meeting-list { font-family: "Poppins", sans-serif; }
+.meeting-list { 
+  font-family: "Poppins", sans-serif;
+}
 
 .header-card {
   background-color: #f0f6fb;
   border-radius: 12px;
   padding: 1.5rem 1.5rem;
   border-left: 5px solid #002855;
+  border: none;
 }
 
 .meeting-card {
   border-radius: 14px;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s ease;
   cursor: default;
   border-left: 5px solid #0093d1 !important;
+  border: none;
+  margin-bottom: 1rem;
 }
+
 .meeting-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
-.text-subu { color: #002855; }
-.border-left-subu { border-left: 5px solid #0093d1 !important; }
+.text-subu { 
+  color: #002855; 
+}
+
+.border-left-subu { 
+  border-left: 5px solid #0093d1 !important; 
+}
 
 .btn-subu,
-.btn-subu:hover { background-color: #0093d1; border-color: #0093d1; color: #fff; }
+.btn-subu:hover { 
+  background-color: #0093d1; 
+  border-color: #0093d1; 
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.btn-subu:hover {
+  background-color: #007bb5;
+  border-color: #007bb5;
+  transform: translateY(-1px);
+}
 
 .input-elevated {
   border-radius: 12px;
@@ -378,6 +400,7 @@ export default {
     background: #f6f9fc;
     border: 1px solid #e6edf3;
   }
+  
   .form-control,
   .custom-select {
     border: 1px solid #e6edf3;
@@ -389,17 +412,15 @@ export default {
   border-color: #d9e6ef;
   background: #f8fbff;
   color: #003f91;
+  transition: all 0.3s ease;
 }
+
 .segmented .btn.active,
 .segmented .btn[aria-pressed="true"] {
   background: #0093d1;
   border-color: #0093d1;
   color: #fff;
   box-shadow: 0 0 0 0.05rem rgba(0,147,209,0.35);
-}
-
-@media (max-width: 767.98px) {
-  .filter-bar { padding: 1rem; }
 }
 
 .text-header {
@@ -410,15 +431,74 @@ export default {
   color: #6c757d;
 }
 
-/* Özet kart kapsayıcısı */
+/* Summary cards wrapper */
 .summary-cards-wrapper {
   display: flex;
   justify-content: center;
 
   > * {
     width: 120%;
-    max-width: 1800px; /* Bootstrap container hissi */
+    max-width: 1800px;
     padding: 0 1rem;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767.98px) {
+  .filter-bar { 
+    padding: 1rem; 
+  }
+  
+  .header-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .meeting-card {
+    margin-bottom: 0.75rem;
+  }
+  
+  .meeting-card .card-body {
+    padding: 1rem;
+  }
+  
+  .summary-cards-wrapper > * {
+    padding: 0 0.5rem;
+  }
+  
+  .segmented .btn {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-card {
+    padding: 0.875rem;
+    border-radius: 10px;
+  }
+  
+  .meeting-card {
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .meeting-card .card-body {
+    padding: 0.875rem;
+  }
+  
+  .meeting-card h5 {
+    font-size: 1rem;
+  }
+  
+  .meeting-card p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .btn-subu {
+    font-size: 0.85rem;
+    padding: 0.375rem 0.75rem;
   }
 }
 </style>

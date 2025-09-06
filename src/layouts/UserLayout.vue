@@ -33,13 +33,8 @@ export default {
   data() {
     return {
       sidebarVisible: window.innerWidth > 991,
+      isMobile: window.innerWidth <= 991,
     };
-  },
-  
-  computed: {
-    isMobile() {
-      return window.innerWidth <= 991;
-    }
   },
   
   mounted() {
@@ -62,11 +57,11 @@ export default {
     },
     
     handleResize() {
-      const isMobile = window.innerWidth <= 991;
-      if (!isMobile && !this.sidebarVisible) {
+      this.isMobile = window.innerWidth <= 991;
+      if (!this.isMobile && !this.sidebarVisible) {
         this.sidebarVisible = true;
       }
-      if (isMobile && this.sidebarVisible) {
+      if (this.isMobile && this.sidebarVisible) {
         this.sidebarVisible = false;
       }
     },
