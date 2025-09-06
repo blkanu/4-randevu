@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       meetingTitle: "",
-      selectedDate: null,
+      selectedDate: new Date().toISOString().substr(0, 10),
       selectedSlots: [],
       selectedRoomId: null,
       agendaItems: [],

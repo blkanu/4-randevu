@@ -10,6 +10,7 @@ export default {
   getters: {
     allSpecialDays: (s) => s.items,
     isSpecialDay:   (s) => (isoDate) => s.items.some(d => d.date === isoDate),
+    fullDayDates:   (s) => s.items.map(item => item.date),
   },
   mutations: {
     ADD_SPECIAL_DAY(s, payload) {

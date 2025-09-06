@@ -24,7 +24,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: null,
+      default: "",
     },
     disabledDates: {
       type: Array,
