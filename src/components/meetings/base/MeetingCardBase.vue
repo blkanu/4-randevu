@@ -1,15 +1,22 @@
 <template>
   <b-card class="meeting-card shadow-sm border-left-subu">
     <!-- Başlık + Rozetler -->
-    <div class="d-flex align-items-start justify-content-between mb-2">
-      <h5 class="text-subu font-weight-bold mb-2">{{ meeting.title }}</h5>
+    <div class="d-flex align-items-start justify-content-between mb-3">
+      <div class="flex-grow-1 mr-3">
+        <h5 class="text-subu font-weight-bold mb-1">{{ meeting.title }}</h5>
+        <small class="text-muted">
+          <b-icon icon="calendar-event" class="mr-1" /> {{ meeting.date }}
+          <span class="mx-2">•</span>
+          <b-icon icon="clock" class="mr-1" /> {{ meeting.startTime }} - {{ meeting.endTime }}
+        </small>
+      </div>
 
-      <div class="d-flex align-items-center">
+      <div class="d-flex flex-column align-items-end">
         <!-- YALNIZ Onaylandi ise devam ediyor rozeti -->
         <b-badge
           v-if="display.showCountdown !== false && meeting.status === 'Onaylandi' && h.isOngoing(meeting)"
           variant="primary"
-          class="mr-2"
+          class="mb-1"
         >
           <b-icon icon="play-fill" class="mr-1" /> Devam ediyor
         </b-badge>
@@ -18,7 +25,7 @@
         <b-badge
           v-else-if="display.showCountdown !== false && meeting.status === 'Onaylandi' && h.countdownText(meeting)"
           variant="info"
-          class="mr-2"
+          class="mb-1"
         >
           <b-icon icon="hourglass-split" class="mr-1" />
           {{ h.countdownText(meeting) }}
@@ -30,38 +37,46 @@
       </div>
     </div>
 
-    <!-- Zorunlu Bilgiler -->
-    <p class="text-muted mb-1">
-      <b-icon icon="chat-left-text" class="mr-1" />
-      <strong>Gündem:</strong> {{ meeting.agenda || '-' }}
-    </p>
+    <!-- Ana İçerik -->
+    <div class="meeting-content">
+      <div class="row no-gutters">
+        <div class="col-12 mb-2">
+          <p class="text-muted mb-2">
+            <b-icon icon="chat-left-text" class="mr-1" />
+            <strong>Gündem:</strong> {{ meeting.agenda || '-' }}
+          </p>
+        </div>
+      </div>
 
-    <p class="text-muted mb-1">
-      <b-icon icon="calendar-event" class="mr-1" /> {{ meeting.date }}
-    </p>
+      <div class="row no-gutters">
+        <div class="col-md-6 mb-1">
+          <p class="text-muted mb-1">
+            <b-icon icon="geo-alt" class="mr-1" />
+            Salon: {{ roomLabel }}
+          </p>
+        </div>
 
-    <p class="text-muted mb-1">
-      <b-icon icon="clock" class="mr-1" /> {{ meeting.startTime }} - {{ meeting.endTime }}
-    </p>
+        <div class="col-md-6 mb-1">
+          <p v-if="display.showOwner !== false" class="text-muted mb-1">
+            <b-icon icon="person-fill" class="mr-1" /> Sahibi: {{ ownerLabel }}
+          </p>
+        </div>
+      </div>
 
-    <p class="text-muted mb-1">
-      <b-icon icon="geo-alt" class="mr-1" />
-      Salon: {{ roomLabel }}
-    </p>
-
-    <p v-if="display.showOwner !== false" class="text-muted mb-1">
-      <b-icon icon="person-fill" class="mr-1" /> Sahibi: {{ ownerLabel }}
-    </p>
-
-    <p class="text-muted mb-2">
-      <b-icon icon="people-fill" class="mr-1" />
-      <template v-if="participantsMode==='count'">
-        Katılımcı Sayısı: {{ participantsCount }}
-      </template>
-      <template v-else>
-        Katılımcılar: {{ participantsNames || '-' }}
-      </template>
-    </p>
+      <div class="row no-gutters">
+        <div class="col-12">
+          <p class="text-muted mb-2">
+            <b-icon icon="people-fill" class="mr-1" />
+            <template v-if="participantsMode==='count'">
+              Katılımcı Sayısı: {{ participantsCount }}
+            </template>
+            <template v-else>
+              Katılımcılar: {{ participantsNames || '-' }}
+            </template>
+          </p>
+        </div>
+      </div>
+    </div>
 
     <!-- Salt-okuma gündem maddeleri -->
     <div v-if="Array.isArray(meeting.agendaItems) && meeting.agendaItems.length">
@@ -223,10 +238,67 @@ export default {
 <style scoped lang="scss">
 .border-left-subu {
   border-left: 5px solid #0093d1 !important;
-  
 }
-.meeting-card { border-radius: 14px; transition: all .2s ease-in-out; }
-.meeting-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.08); }
-.text-subu { color:#002855; }
-.btn-subu, .btn-subu:hover { background-color:#0093d1; border-color:#0093d1; color:#fff; }
+
+.meeting-card { 
+  border-radius: 14px; 
+  transition: all .2s ease-in-out;
+  border: 1px solid rgba(0, 147, 209, 0.1);
+  overflow: hidden;
+  
+  &:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 12px 28px rgba(0, 147, 209, 0.15);
+    border-color: rgba(0, 147, 209, 0.3);
+  }
+}
+
+.text-subu { 
+  color: #002855; 
+}
+
+.btn-subu, .btn-subu:hover { 
+  background-color: #0093d1; 
+  border-color: #0093d1; 
+  color: #fff; 
+}
+
+// Improve text readability and spacing
+p.text-muted {
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Better icon alignment
+.b-icon {
+  vertical-align: -0.125em;
+}
+
+// Enhance agenda items appearance
+ul {
+  background: rgba(0, 147, 209, 0.05);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0;
+  
+  li {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(0, 147, 209, 0.1);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+// Badge styling improvements
+.badge {
+  font-size: 0.75rem;
+  padding: 0.375rem 0.6rem;
+  border-radius: 6px;
+}
 </style>
