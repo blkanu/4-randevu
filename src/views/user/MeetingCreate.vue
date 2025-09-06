@@ -4,8 +4,17 @@
       <h4 class="mb-0 text-subu font-weight-bold">📝 Yeni Toplantı Oluştur</h4>
     </b-card>
 
-    <b-form-group label="Toplantı Adı" label-for="meetingTitle" class="font-weight-bold text-subu">
-      <b-form-input id="meetingTitle" v-model="meetingTitle" placeholder="Toplantı başlığını giriniz..." required />
+    <b-form-group label-for="meetingTitle" class="font-weight-bold text-subu">
+      <template #label>
+        Toplantı Adı <span class="text-danger">*</span>
+      </template>
+      <b-form-input 
+        id="meetingTitle" 
+        v-model="meetingTitle" 
+        placeholder="Toplantı başlığını giriniz..." 
+        required 
+        :state="meetingTitle.trim() ? true : null"
+      />
     </b-form-group>
 
     <RoomSelector v-model="selectedRoomId" />
@@ -25,13 +34,49 @@
       <ParticipantSelector @update-participants="handleParticipantUpdate" />
     </b-form-group>
 
-    <b-form-group class="font-weight-bold text-subu" label="Toplantı Gündemi">
+    <b-form-group class="font-weight-bold text-subu">
+      <template #label>
+        Toplantı Gündemi <span class="text-danger">*</span>
+        <small class="text-muted font-weight-normal">(En az {{ AGENDA_MIN }} madde)</small>
+      </template>
       <AgendaInput v-model="agendaItems" :min="AGENDA_MIN" :max="AGENDA_MAX" />
     </b-form-group>
 
-    <b-button variant="success" class="mt-4 font-weight-bold" :disabled="!isFormValid" @click="showSummary = true">
-      Toplantıyı Oluştur
-    </b-button>
+    <!-- Validation Summary -->
+    <b-card v-if="!isFormValid" class="mt-4 mb-3" border-variant="warning" bg-variant="light">
+      <b-card-text>
+        <small class="text-warning">
+          <b-icon icon="exclamation-triangle" class="mr-1"></b-icon>
+          <strong>Eksik alanlar:</strong>
+        </small>
+        <ul class="mb-0 mt-2">
+          <li v-if="!meetingTitle.trim()" class="text-muted">Toplantı adı</li>
+          <li v-if="!selectedRoomId" class="text-muted">Toplantı salonu</li>
+          <li v-if="!selectedSlots.length" class="text-muted">Toplantı saati</li>
+          <li v-if="agendaItems.length < AGENDA_MIN" class="text-muted">
+            Gündem (en az {{ AGENDA_MIN }} madde)
+          </li>
+          <li v-if="closedBySpecialDay.allDay" class="text-muted">Seçilen gün kapalı</li>
+        </ul>
+      </b-card-text>
+    </b-card>
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+      <small class="text-muted">
+        <b-icon icon="info-circle" class="mr-1"></b-icon>
+        Toplantı onay için yöneticiye gönderilecektir
+      </small>
+      <b-button 
+        variant="success" 
+        size="lg"
+        class="font-weight-bold px-4" 
+        :disabled="!isFormValid" 
+        @click="showSummary = true"
+      >
+        <b-icon icon="calendar-plus" class="mr-2"></b-icon>
+        Toplantıyı Oluştur
+      </b-button>
+    </div>
 
     <b-modal v-model="showSummary" title="Toplantı Özeti" @ok="submitMeeting" ok-title="Oluştur" cancel-title="İptal">
       <p><strong>Toplantı:</strong> {{ meetingTitle }}</p>

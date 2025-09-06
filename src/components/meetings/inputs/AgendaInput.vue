@@ -8,13 +8,24 @@
         @keyup.enter="addAgenda"
         class="mr-2"
       />
-      <b-button :disabled="isAtMax" class="btn-subu" @click="addAgenda">
+      <b-button :disabled="isAtMax || !newAgenda.trim()" variant="subu" @click="addAgenda">
         Ekle
       </b-button>
     </div>
 
     <small class="text-muted d-block mb-3">
-      {{ internalAgenda.length }} / {{ max }} {{ internalAgenda.length < min ? '(en az ' + min + ' madde)' : '' }}
+      <b-badge :variant="internalAgenda.length < min ? 'warning' : 'info'" class="mr-2">
+        {{ internalAgenda.length }} / {{ max }}
+      </b-badge>
+      <span v-if="internalAgenda.length < min" class="text-warning">
+        En az {{ min }} gündem maddesi gereklidir
+      </span>
+      <span v-else-if="internalAgenda.length === max" class="text-info">
+        Maksimum gündem maddesi sayısına ulaştınız
+      </span>
+      <span v-else class="text-success">
+        {{ max - internalAgenda.length }} madde daha ekleyebilirsiniz
+      </span>
     </small>
 
     <!-- Gündem Listesi -->

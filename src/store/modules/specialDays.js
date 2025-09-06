@@ -11,6 +11,11 @@ export default {
     allSpecialDays: (s) => s.items,
     isSpecialDay:   (s) => (isoDate) => s.items.some(d => d.date === isoDate),
     fullDayDates:   (s) => s.items.map(item => item.date),
+    rangesByDate:   (s) => (isoDate) => {
+      // Return ranges for a specific date if any special day configurations exist
+      // For now, return empty array since we don't have range-based special days
+      return [];
+    },
   },
   mutations: {
     ADD_SPECIAL_DAY(s, payload) {
