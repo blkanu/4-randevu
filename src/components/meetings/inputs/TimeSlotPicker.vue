@@ -72,10 +72,12 @@ export default {
 <style scoped lang="scss">
 .time-slot-section label {
   margin-bottom: 0.5rem;
+  display: block;
 }
 
 .time-slots {
   gap: 0.5rem;
+  justify-content: flex-start;
 }
 
 .slot-box {
@@ -89,6 +91,7 @@ export default {
   user-select: none;
   min-width: 130px;
   text-align: center;
+  font-size: 0.9rem;
 }
 
 .slot-box.available {
@@ -96,9 +99,12 @@ export default {
   color: #002855;
   border-color: #c3e6cb;
 }
+
 .slot-box.available:hover {
   background-color: #186d3e;
   color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .slot-box.approved {
@@ -119,8 +125,37 @@ export default {
   background-color: #186d3e;
   color: white !important;
   border-color: #00ad34;
+  box-shadow: 0 2px 8px rgba(24, 109, 62, 0.3);
 }
+
 .text-subu {
   color: #002855;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .slot-box {
+    min-width: calc(50% - 1rem);
+    margin: 0.25rem 0.5rem 0.25rem 0;
+    padding: 0.7rem 0.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .time-slots {
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .slot-box {
+    min-width: calc(50% - 0.5rem);
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+    margin: 0.2rem 0.25rem 0.2rem 0;
+  }
+  
+  .time-slot-section {
+    margin-top: 1rem;
+  }
 }
 </style>

@@ -152,13 +152,96 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.dashboard { font-family: "Poppins", sans-serif; }
-.text-subu { color: #002855; }
-.border-left-right-subu { border-left: 5px solid #0093d1 !important; border-right: 5px solid #0093d1 !important; }
-.card-hover { transition: all 0.25s ease; }
-.card-hover:hover { transform: translateY(-6px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); }
-.icon-circle { background-color: rgba(255, 255, 255, 0.2); border-radius: 50%; padding: 0.6rem; display: flex; align-items: center; justify-content: center; }
-.welcome-card { background-color: #f0f6fb; border-left: 5px solid #002855; border-radius: 15px; padding: 1.25rem 1.5rem; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05); }
-.user-name { color: #002855; font-weight: 600; }
-.text-primary { color: #003f91 !important; }
+.dashboard {
+  font-family: "Poppins", sans-serif;
+}
+
+.text-subu {
+  color: #002855;
+}
+
+.border-left-subu {
+  border-left: 5px solid #0093d1 !important;
+}
+
+.card-hover {
+  transition: all 0.25s ease;
+  border: none;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.icon-circle {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  padding: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;
+  min-height: 60px;
+}
+
+.welcome-card {
+  background-color: #f0f6fb;
+  border-left: 5px solid #002855;
+  border-radius: 15px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: none;
+}
+
+.user-name {
+  color: #002855;
+  font-weight: 600;
+}
+
+.text-primary {
+  color: #003f91 !important;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .welcome-card {
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .icon-circle {
+    min-width: 50px;
+    min-height: 50px;
+    padding: 0.5rem;
+  }
+  
+  .card-hover {
+    margin-bottom: 1rem;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-3px);
+  }
+}
+
+@media (max-width: 576px) {
+  .welcome-card {
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+  }
+  
+  .dashboard h5 {
+    font-size: 1.1rem;
+  }
+  
+  .card-hover h5 {
+    font-size: 1rem;
+  }
+  
+  .icon-circle {
+    min-width: 45px;
+    min-height: 45px;
+  }
+}
 </style>

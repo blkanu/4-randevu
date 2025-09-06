@@ -82,20 +82,52 @@ export default {
   background-color: #ffffff;
   border-bottom: 1px solid #e0e0e0;
   min-height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
 }
 
 .dropdown-user-link {
   cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-user-link:hover {
+  background-color: #f8f9fa;
 }
 
 .badge-minimal {
   position: relative;
   top: 1px;
 }
+
 .navbar-title {
-  color: #002855; // Ana SUBÜ lacivert tonu
+  color: #002855;
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: 0.3px;
+}
+
+/* Mobile improvements */
+@media (max-width: 768px) {
+  .navbar-title {
+    font-size: 1.2rem;
+  }
+  
+  .dropdown-user-link .d-none {
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-container {
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-title {
+    font-size: 1rem;
+  }
 }
 </style>

@@ -16,7 +16,7 @@
         </h4>
       </div>
 
-      <b-form @submit.prevent="handleLogin">
+      <b-form @submit.prevent="handleLogin" novalidate>
         <b-form-group label="E-posta" label-for="emailInput">
           <b-form-input
             id="emailInput"
@@ -24,7 +24,13 @@
             type="email"
             required
             placeholder="mail@subu.edu.tr"
+            autocomplete="email"
+            :state="emailState"
+            @blur="validateEmail"
           ></b-form-input>
+          <b-form-invalid-feedback v-if="emailState === false">
+            Lütfen geçerli bir e-posta adresi giriniz.
+          </b-form-invalid-feedback>
         </b-form-group>
 
         <b-form-group label="Şifre" label-for="passwordInput">
@@ -34,21 +40,26 @@
             type="password"
             required
             placeholder="Şifrenizi giriniz"
+            autocomplete="current-password"
+            :state="passwordState"
+            @blur="validatePassword"
           ></b-form-input>
+          <b-form-invalid-feedback v-if="passwordState === false">
+            Şifre en az 6 karakter olmalıdır.
+          </b-form-invalid-feedback>
         </b-form-group>
 
-        <!-- ENTER tuşu bilgisi -->
+        <!-- Enter key info -->
         <small class="text-muted d-block text-center mb-3">
-          
+          Giriş yapmak için Enter tuşuna basabilirsiniz
         </small>
 
         <b-button
-          :disabled="isLoading"
+          :disabled="isLoading || !isFormValid"
           variant="primary"
           block
           type="submit"
-          class="mt-1"
-          style="background-color: #0093D1; padding: 0.9rem; font-size:1.1rem; "
+          class="mt-1 login-btn"
         >
           <b-spinner
             v-if="isLoading"
@@ -85,13 +96,52 @@ export default {
       password: '',
       loginError: '',
       isLoading: false,
+      emailState: null,
+      passwordState: null,
     };
+  },
+  
+  computed: {
+    isFormValid() {
+      return this.email && this.password && this.emailState !== false && this.passwordState !== false;
+    }
   },
   methods: {
     ...mapActions('auth', ['login']),
+    
+    validateEmail() {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!this.email) {
+        this.emailState = null;
+      } else if (emailRegex.test(this.email)) {
+        this.emailState = true;
+      } else {
+        this.emailState = false;
+      }
+    },
+    
+    validatePassword() {
+      if (!this.password) {
+        this.passwordState = null;
+      } else if (this.password.length >= 6) {
+        this.passwordState = true;
+      } else {
+        this.passwordState = false;
+      }
+    },
+    
     async handleLogin() {
+      this.validateEmail();
+      this.validatePassword();
+      
+      if (!this.isFormValid) {
+        this.loginError = 'Lütfen tüm alanları doğru şekilde doldurunuz.';
+        return;
+      }
+      
       this.isLoading = true;
       this.loginError = '';
+      
       try {
         const user = await this.login({
           email: this.email,
@@ -146,11 +196,67 @@ b-card {
   background-color: #ffffff;
   border-radius: 12px;
 }
+
 .login-card {
   backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0.85);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
+.login-btn {
+  background-color: #0093D1 !important;
+  border-color: #0093D1 !important;
+  padding: 0.9rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
 
+.login-btn:hover:not(:disabled) {
+  background-color: #007bb5 !important;
+  border-color: #007bb5 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 147, 209, 0.3);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Form improvements */
+.form-group label {
+  font-weight: 600;
+  color: #002855;
+  margin-bottom: 0.5rem;
+}
+
+.form-control {
+  border-radius: 8px;
+  border: 2px solid #e9ecef;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #0093D1;
+  box-shadow: 0 0 0 0.2rem rgba(0, 147, 209, 0.25);
+}
+
+.form-control.is-valid {
+  border-color: #28a745;
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+}
+
+/* Mobile optimizations */
+@media (max-width: 576px) {
+  .login-btn {
+    padding: 0.8rem !important;
+    font-size: 1rem !important;
+  }
+}
 </style>
