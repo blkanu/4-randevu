@@ -1,6 +1,6 @@
 <template>
   <div class="user-layout d-flex">
-    <Sidebar v-show="sidebarVisible" />
+    <Sidebar class="sidebar" v-show="sidebarVisible" />
     <div class="main-content flex-grow-1">
       <Navbar :toggleVerticalMenuActive="toggleSidebar" />
       <div class="p-3">
@@ -53,4 +53,12 @@ methods: {
   min-height: 100vh;
   background-color: #f9f9f9;
 }
+/* Sidebar.vue içinde ya da global CSS'te */
+.sidebar {
+  width: 230px;         /* tüm layoutlarda aynı genişlik */
+  flex-shrink: 0;       /* ekran daraldığında büzülmesin */
+  background-color: #fff; /* arka plan sabit olsun */
+  border-right: 1px solid #ddd; /* isteğe bağlı ayırıcı çizgi */
+}
+
 </style>

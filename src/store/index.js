@@ -8,6 +8,8 @@ import timeSlots from './modules/timeSlots';
 import specialDays from './modules/specialDays';
 import decisions from './modules/decisions';
 
+import mailSettings from './modules/mailSettings';
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -26,6 +28,8 @@ export default new Vuex.Store({
     users,
     timeSlots,
     specialDays,
-    decisions
+    decisions,
+    
+    mailSettings
   }
 })

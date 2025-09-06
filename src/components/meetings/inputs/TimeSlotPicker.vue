@@ -1,7 +1,7 @@
 <template>
   <div class="time-slot-section mt-4">
     <label class="font-weight-bold text-subu">Toplantı Saat Aralığı</label>
-    <div class="time-slots d-flex flex-wrap mt-2">
+    <div class="time-slots d-flex flex-wrap mt-0 mb-3">
       <div
         v-for="slot in slots"
         :key="slot.id"

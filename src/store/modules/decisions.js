@@ -1,3 +1,6 @@
+// store/modules/decisions.js
+// Backend modeline uyumlu: MeetingDecision { id, meetingId, description, createdAt }
+
 const state = {
   decisions: [
     {
@@ -11,43 +14,55 @@ const state = {
       meetingId: 2,
       description: "Yeni öğretim yılı planı onaylandı.",
       createdAt: "2025-08-07T14:15:00"
-    },
-    {
-      id: 3,
-      meetingId: 3,
-        description: "",
-        createdAt: ""
-    },
-    
+    }
   ]
 };
 
 const getters = {
-  allDecisions: (state) => state.decisions,
+  allDecisions: (s) => s.decisions,
 
-  getDecisionsByMeetingId: (state) => (meetingId) =>
-    state.decisions.filter((d) => d.meetingId === meetingId),
+  // Belirli toplantıya ait kararlar (tarihe göre yeni -> eski)
+  getDecisionsByMeetingId: (s) => (meetingId) =>
+    s.decisions
+      .filter(d => d.meetingId === meetingId)
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)),
 
-  getLastDecisionForMeeting: (state) => (meetingId) => {
-    const decisions = state.decisions
-      .filter((d) => d.meetingId === meetingId)
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    return decisions[0] || null;
+  // Son karar (tek kayıt)
+  getLastDecisionForMeeting: (s, g) => (meetingId) => {
+    const list = g.getDecisionsByMeetingId(meetingId);
+    return list[0] || null;
   }
 };
 
 const mutations = {
   ADD_DECISION(state, decision) {
     state.decisions.push(decision);
+  },
+  SET_DECISIONS(state, list) {
+    state.decisions = Array.isArray(list) ? list : [];
   }
 };
 
 const actions = {
-  addDecision({ commit }, decision) {
-    commit("ADD_DECISION", {
-      id: Date.now(), // Mock ID – gerçek sistemde backend döner
-      ...decision
-    });
+  // Toplantı bitince veya süreçte karar ekleme
+  addDecision({ commit }, { meetingId, description, createdAt }) {
+    if (!meetingId) throw new Error("meetingId zorunludur.");
+    if (!description || !description.trim()) throw new Error("Açıklama zorunludur.");
+
+    const item = {
+      id: Date.now(), // mock ID, backend geldiğinde gerçek ID döner
+      meetingId,
+      description: description.trim(),
+      createdAt: createdAt || new Date().toISOString(),
+    };
+
+    commit("ADD_DECISION", item);
+    return item;
+  },
+
+  // API geldiğinde senkronizasyon için
+  loadDecisions({ commit }, list) {
+    commit("SET_DECISIONS", list);
   }
 };
 

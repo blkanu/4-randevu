@@ -6,16 +6,14 @@ const state = {
       id: 1,
       title: "Akreditasyon Hazırlığı",
       agenda: "Program çıktılarının gözden geçirilmesi",
-      date: "2025-08-08",
+      date: "2025-08-20",
       startTime: "10:00",
       endTime: "11:00",
       roomId: 1,
-      owner: { id: 1, name: "Ahmet Yılmaz", email: "user@subu.edu.tr" },
       ownerId: 1,
+      owner: { id: 1, name: "Ahmet Yılmaz", email: "user@subu.edu.tr" },
       participants: [2, 3, 6],
-      agendaItems: [
-        { text: "Danışma kurulu raporları değerlendirilecek", userId: 2 },
-      ],
+      agendaItems: [{ text: "Danışma kurulu raporları değerlendirilecek", userId: 2 }],
       decisions: [],
       status: "Onaylandi",
     },
@@ -23,12 +21,12 @@ const state = {
       id: 2,
       title: "Lisans Kurulu Değerlendirmesi",
       agenda: "Yeni öğretim yılı planlaması",
-      date: "2025-08-08",
+      date: "2025-11-13",
       startTime: "13:00",
       endTime: "14:00",
       roomId: 2,
-      owner: { id: 5, name: "Zeynep Kaya", email: "zeynep@subu.edu.tr" },
       ownerId: 5,
+      owner: { id: 5, name: "Zeynep Kaya", email: "zeynep@subu.edu.tr" },
       participants: [1, 4, 6],
       agendaItems: [],
       decisions: [],
@@ -38,12 +36,12 @@ const state = {
       id: 3,
       title: "Yönetim Kurulu Toplantısı",
       agenda: "Stratejik planlama",
-      date: "2025-08-08",
+      date: "2025-08-21",
       startTime: "09:00",
       endTime: "10:00",
       roomId: 3,
-      owner: { id: 2, name: "Ali Admin", email: "ali@subu.edu.tr" },
       ownerId: 2,
+      owner: { id: 2, name: "Ali Admin", email: "ali@subu.edu.tr" },
       participants: [1, 4, 6],
       agendaItems: [],
       decisions: [],
@@ -53,16 +51,16 @@ const state = {
       id: 4,
       title: "Akademik Yıl Açılışı",
       agenda: "Yeni akademik yılın açılışı",
-      date: "2025-08-09",
+      date: "2025-08-19",
       startTime: "11:00",
       endTime: "12:00",
       roomId: 1,
-      owner: { id: 3, name: "Seda Süper", email: "seda@subu.edu.tr" },
       ownerId: 3,
+      owner: { id: 3, name: "Seda Süper", email: "seda@subu.edu.tr" },
       participants: [2, 5, 6],
       agendaItems: [],
       decisions: [],
-      status: "İptal Edildi",
+      status: "Iptal",
     },
     {
       id: 5,
@@ -72,8 +70,8 @@ const state = {
       startTime: "15:00",
       endTime: "16:00",
       roomId: 4,
-      owner: { id: 4, name: "Rektör Yardımcısı", email: "rektör@subu.edu.tr" },
-      ownerId: 1,
+      ownerId: 4,
+      owner: { id: 4, name: "Rektör Yardımcısı", email: "rektor@subu.edu.tr" },
       participants: [1, 3, 6],
       agendaItems: [],
       decisions: [],
@@ -83,90 +81,176 @@ const state = {
       id: 6,
       title: "Öğrenci Temsilcileri Toplantısı",
       agenda: "Öğrenci temsilcileri ile görüşme",
-      date: "2025-08-05",
+      date: "2025-08-25",
       startTime: "14:00",
-      endTime: "15:00",
+      endTime: "17:00",
       roomId: 5,
-      owner: { id: 5, name: "Veli Demir", email: "veli@subu.edu.tr" },
       ownerId: 5,
+      owner: { id: 5, name: "Veli Demir", email: "veli@subu.edu.tr" },
       participants: [1, 4, 6],
       agendaItems: [],
       decisions: [],
       status: "Onaylandi",
     },
+    {
+      id: 7,
+      title: "Lisans Kurulu Değerlendirmesi",
+      agenda: "Yeni öğretim yılı planlaması",
+      date: "2025-11-13",
+      startTime: "13:00",
+      endTime: "14:00",
+      roomId: 2,
+      ownerId: 5,
+      owner: { id: 5, name: "Zeynep Kaya", email: "zeynep@subu.edu.tr" },
+      participants: [1, 4, 6],
+      agendaItems: [],
+      decisions: [],
+      status: "Beklemede",
+    },
+    {
+      id: 8,
+      title: "Lisans Kurulu Değerlendirmesi",
+      agenda: "Yeni öğretim yılı planlaması",
+      date: "2025-11-13",
+      startTime: "13:00",
+      endTime: "14:00",
+      roomId: 2,
+      ownerId: 5,
+      owner: { id: 5, name: "Zeynep Kaya", email: "zeynep@subu.edu.tr" },
+      participants: [1, 4, 6],
+      agendaItems: [],
+      decisions: [],
+      status: "Beklemede",
+    },
+    {
+      id: 9,
+      title: "Lisans Kurulu Değerlendirmesi",
+      agenda: "Yeni öğretim yılı planlaması",
+      date: "2025-11-13",
+      startTime: "13:00",
+      endTime: "14:00",
+      roomId: 2,
+      ownerId: 5,
+      owner: { id: 5, name: "Zeynep Kaya", email: "zeynep@subu.edu.tr" },
+      participants: [1, 4, 6],
+      agendaItems: [],
+      decisions: [],
+      status: "Beklemede",
+    },
   ],
 };
 
+/* ----- Ortak zaman yardımcıları ----- */
+function startDT(m) { return new Date(`${m.date}T${m.startTime}`); }
+function endDT(m)   { return new Date(`${m.date}T${m.endTime}`); }
+function nowDT()    { return new Date(); }
+
 const getters = {
-  allMeetings: (state) => state.meetings,
+  allMeetings: (s) => s.meetings,
+  meetingById: (s) => (id) => s.meetings.find(m => m.id === id),
 
-  meetingById: (state) => (id) => {
-    return state.meetings.find((m) => m.id === id);
+  pendingMeetings: (s) => s.meetings.filter(m => m.status === "Beklemede"),
+
+  pendingMeetingsForAdmin: (s, g, rS, rG) => (adminUserId) => {
+    const rooms = rG["rooms/allRooms"];
+    const roomIds = rooms.filter(r => r.adminId === adminUserId).map(r => r.id);
+    return s.meetings.filter(m => m.status === "Beklemede" && roomIds.includes(m.roomId));
   },
 
-  activeMeetings: (state) => {
-    const now = new Date();
-return state.meetings.filter((m) => {
-  const meetingDateTime = new Date(`${m.date}T${m.startTime}`);
-  return meetingDateTime >= now;
-});
-
+  /* Aktif = Onaylandı ve bitiş gelecekte (devam edenler dahil) */
+  activeMeetings: (s) => {
+    const now = nowDT();
+    return s.meetings.filter(m => m.status === "Onaylandi" && endDT(m) > now);
   },
 
-  upcomingWithin7Days: (state, getters) =>
-    getters.activeMeetings.filter((m) => {
-      const now = new Date();
-      const in7 = new Date();
-      in7.setDate(now.getDate() + 7);
-      const date = new Date(m.date);
-      return date >= now && date <= in7;
-    }),
+  /* 7 gün penceresi: start ≤ now+7gün ve end > now (onaylı) */
+  upcomingWithin7Days: (s) => {
+    const now = nowDT();
+    const in7 = new Date(now); in7.setDate(in7.getDate() + 7);
+    return s.meetings.filter(m =>
+      m.status === "Onaylandi" &&
+      endDT(m) > now &&
+      startDT(m) <= in7
+    ).sort((a, b) => startDT(a) - startDT(b));
+  },
 
-  pastMeetings: (state) => {
-  const now = new Date();
-  return state.meetings.filter((m) => {
-    const meetingDateTime = new Date(`${m.date}T${m.startTime}`);
-    return meetingDateTime < now;
-  });
-},
+  /* Geçmiş = end ≤ now */
+  pastMeetings: (s) => {
+    const now = nowDT();
+    return s.meetings.filter(m => endDT(m) <= now);
+  },
 
+  userMeetings: (s) => (userId) =>
+    s.meetings.filter(m => m.ownerId === userId || (m.participants || []).includes(userId)),
 
-  userMeetings: (state) => (userId) =>
-    state.meetings.filter(
-      (m) => m.ownerId === userId || m.participants.includes(userId)
-    ),
+  meetingsByRoom: (s) => (roomId) => s.meetings.filter(m => m.roomId === roomId),
+
+  todayMeetingsByRoom: (s, g) => (roomId) => {
+    const today = new Date().toISOString().split("T")[0];
+    return g.meetingsByRoom(roomId).filter(m => m.date === today);
+  },
 };
 
 const mutations = {
   ADD_AGENDA_ITEM(state, { meetingId, text, userId }) {
-    const meeting = state.meetings.find((m) => m.id === meetingId);
-    if (meeting) {
-      meeting.agendaItems.push({ text, userId });
-    }
+    const m = state.meetings.find(m => m.id === meetingId);
+    if (m) m.agendaItems.push({ text, userId });
   },
-
   ADD_DECISION(state, { meetingId, text }) {
-    const meeting = state.meetings.find((m) => m.id === meetingId);
-    if (meeting) {
-      const newDecision = {
-        id: Date.now(),
-        description: text,
-        createdAt: new Date().toISOString(),
-      };
-      meeting.decisions.push(newDecision);
-    }
+    const m = state.meetings.find(m => m.id === meetingId);
+    if (m) m.decisions.push({ id: Date.now(), description: text, createdAt: new Date().toISOString() });
   },
-
   CREATE_MEETING(state, meetingData) {
-    const newMeeting = {
+    state.meetings.push({
       id: Date.now(),
       ...meetingData,
-      agendaItems: [],
+      status: meetingData.status || "Beklemede",
+      agendaItems: meetingData.agendaItems || [],
       decisions: [],
-    };
-    state.meetings.push(newMeeting);
+    });
+  },
+  UPDATE_MEETING_STATUS(state, { id, status }) {
+    const m = state.meetings.find(x => x.id === id);
+    if (m) m.status = status;
   },
 };
+
+// yardımcılar
+function startInFuture(meeting) {
+  return startDT(meeting) > nowDT();
+}
+
+function canUpdateStatus(ctx, meeting, nextStatus) {
+  const me = ctx.rootGetters["auth/user"];
+  if (!me) return false;
+
+  const myRole = me.role; // "Admin" | "SuperAdmin" | "UstMakam" | "User"
+  if (myRole === "SuperAdmin" || myRole === "UstMakam") return true; // tam yetki
+
+  // OWNER: Onaylandi → Iptal (başlamadıysa)
+  if (me.id === meeting.ownerId) {
+    if (meeting.status === "Onaylandi" && nextStatus === "Iptal" && startInFuture(meeting)) {
+      return true;
+    }
+  }
+
+  if (myRole === "Admin") {
+    const roomAdminId = ctx.rootGetters["rooms/getRoomById"](meeting.roomId)?.adminId;
+    const isRoomAdmin = roomAdminId === me.id;
+
+    // Admin: Beklemede → (Onay / Reddet)
+    if (meeting.status === "Beklemede") return isRoomAdmin;
+
+    // Admin: Onaylandi → Iptal (başlamadıysa)
+    if (isRoomAdmin && meeting.status === "Onaylandi" && nextStatus === "Iptal" && startInFuture(meeting)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  return false;
+}
 
 const actions = {
   addAgendaItem({ commit }, payload) {
@@ -177,15 +261,32 @@ const actions = {
     commit("ADD_DECISION", payload);
   },
 
-  createMeeting({ commit }, meetingData) {
-    commit("CREATE_MEETING", meetingData);
+  createMeeting({ commit, rootGetters }, meetingData) {
+    const me = rootGetters["auth/user"];
+    const normalized = {
+      ...meetingData,
+      ownerId: meetingData.ownerId || me?.id,
+      owner: meetingData.owner || (me ? { id: me.id, name: me.name, email: me.email } : null),
+    };
+    commit("CREATE_MEETING", normalized);
+  },
+
+  updateMeetingStatus(ctx, { id, status }) {
+    const meeting = ctx.getters.meetingById(id);
+    if (!meeting) return Promise.reject(new Error("Toplantı bulunamadı."));
+
+    if (!canUpdateStatus(ctx, meeting, status)) {
+      return Promise.reject(new Error("Bu işlem için yetkiniz yok."));
+    }
+
+    ctx.commit("UPDATE_MEETING_STATUS", { id, status });
+    return Promise.resolve();
+  },
+
+  // E-posta bildirimi mock
+  sendMeetingNotification() {
+    return Promise.resolve();
   },
 };
 
-export default {
-  namespaced: true,
-  state,
-  getters,
-  mutations,
-  actions,
-};
+export default { namespaced: true, state, getters, mutations, actions };

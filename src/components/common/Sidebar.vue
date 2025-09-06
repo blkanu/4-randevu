@@ -1,19 +1,17 @@
 <template>
   <div class="sidebar shadow-sm">
-    <!-- Logo -->
     <div class="sidebar-header text-center py-3 border-bottom">
       <img src="@/assets/TR-iki_renkli_yatay_logo.png" alt="SUBÜ" width="160" />
     </div>
 
-    <!-- Menü -->
-    <b-nav vertical class="sidebar-menu py-3">
+    <b-nav v-if="menuItems.length" vertical class="sidebar-menu py-3">
       <b-nav-item
         v-for="item in menuItems"
         :key="item.path"
         :to="item.path"
         exact
         class="sidebar-link"
-        active-class="active-link"
+        exact-active-class="active-link"
       >
         <b-icon :icon="item.icon" class="mr-2" />
         {{ item.label }}
@@ -31,7 +29,8 @@ export default {
   computed: {
     ...mapGetters("auth", ["user"]),
     menuItems() {
-      return ROLE_MENU_ITEMS[this.user?.role] || [];
+      const role = this.user && this.user.role ? this.user.role : null;
+      return role && ROLE_MENU_ITEMS[role] ? ROLE_MENU_ITEMS[role] : [];
     },
   },
 };
@@ -72,6 +71,9 @@ export default {
   font-weight: 600;
   border-left: 4px solid #0093d1;
   padding-left: calc(1.5rem - 4px);
+}
+@media (max-width: 991px) {
+  .sidebar { width: 100%; min-height: auto; }
 }
 
 </style>
