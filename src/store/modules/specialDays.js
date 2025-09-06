@@ -9,7 +9,13 @@ export default {
   }),
   getters: {
     allSpecialDays: (s) => s.items,
-    isSpecialDay:   (s) => (isoDate) => s.items.some(d => d.date === isoDate),
+    isSpecialDay: (s) => (isoDate) => s.items.some(d => d.date === isoDate),
+    // Missing getters that components expect
+    fullDayDates: (s) => s.items.map(item => item.date),
+    rangesByDate: (s) => s.items.reduce((acc, item) => {
+      acc[item.date] = item.description;
+      return acc;
+    }, {}),
   },
   mutations: {
     ADD_SPECIAL_DAY(s, payload) {

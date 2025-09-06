@@ -46,6 +46,12 @@ export default {
   display: flex;
   flex-direction: column;
   z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-header {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 1rem;
 }
 
 .sidebar-menu .nav-link {
@@ -54,15 +60,17 @@ export default {
   color: #333333;
   display: flex;
   align-items: center;
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 0 0.75rem 0.5rem;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
 }
 
 .sidebar-link:hover {
   background-color: #f2f6fa;
   color: #002855;
   text-decoration: none;
+  transform: translateX(2px);
 }
 
 .active-link {
@@ -71,9 +79,34 @@ export default {
   font-weight: 600;
   border-left: 4px solid #0093d1;
   padding-left: calc(1.5rem - 4px);
+  box-shadow: 0 2px 4px rgba(0, 147, 209, 0.1);
 }
+
+/* Mobile specific improvements */
 @media (max-width: 991px) {
-  .sidebar { width: 100%; min-height: auto; }
+  .sidebar { 
+    width: 100%; 
+    min-height: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+  
+  .sidebar-header {
+    padding: 1.5rem 1rem;
+  }
+  
+  .sidebar-menu .nav-link {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
 }
 
 </style>

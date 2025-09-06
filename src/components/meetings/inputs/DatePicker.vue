@@ -23,8 +23,9 @@ export default {
 
   props: {
     value: {
-      type: String,
+      type: [String],
       default: null,
+      validator: (value) => value === null || typeof value === 'string'
     },
     disabledDates: {
       type: Array,
