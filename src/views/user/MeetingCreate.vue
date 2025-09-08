@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       meetingTitle: "",
-      selectedDate: null,
+      selectedDate: new Date().toISOString().substr(0, 10), // Bugünün tarihi ile başlat
       selectedSlots: [],
       selectedRoomId: null,
       agendaItems: [],

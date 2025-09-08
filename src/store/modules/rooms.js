@@ -6,8 +6,9 @@ const state = {
     { id: 1, name: "Toplantı Salonu A", capacity: 10, status: ROOM_STATUS.AKTIF,  adminId: 1 },
     { id: 2, name: "Salon B",            capacity: 12, status: ROOM_STATUS.AKTIF,  adminId: 2 },
     { id: 3, name: "Büyük Salon",        capacity: 20, status: ROOM_STATUS.AKTIF,  adminId: 3 },
-    { id: 4, name: "Küçük Salon",        capacity:  8, status: ROOM_STATUS.AKTIF,  adminId: 4 },
+    { id: 4, name: "Küçük Salon",        capacity:  8, status: ROOM_STATUS.PASIF,  adminId: 4 }, // Test için pasif
     { id: 5, name: "Konferans Salonu",   capacity: 30, status: ROOM_STATUS.AKTIF,  adminId: 5 },
+    { id: 6, name: "Toplantı Salonu C",  capacity: 15, status: ROOM_STATUS.BAKIMDA, adminId: 2 }, // Test için bakımda
   ],
 };
 

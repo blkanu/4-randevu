@@ -57,8 +57,8 @@
       <UiTableFooter
         :total-rows="filtered.length"
         :per-page="perPage"
-        :current-page="page"
-        @update:current-page="page = $event"
+        :page="page"
+        @update:page="page = $event"
       />
     </b-card>
   </div>

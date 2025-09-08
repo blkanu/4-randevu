@@ -5,11 +5,31 @@ export default {
     items: [
       { id: 1, date: "2025-08-30", description: "Zafer Bayramı" },
       { id: 2, date: "2025-10-29", description: "Cumhuriyet Bayramı" },
+      { id: 3, date: "2025-09-15", description: "Test Özel Günü" }, // Test için eklenen özel gün
     ],
   }),
   getters: {
     allSpecialDays: (s) => s.items,
     isSpecialDay:   (s) => (isoDate) => s.items.some(d => d.date === isoDate),
+    
+    // MeetingCreate bileşeninin beklediği getter'lar
+    fullDayDates: (s) => s.items.map(item => item.date),
+    
+    // Belirli bir tarihteki özel gün durumunu döndürür
+    rangesByDate: (s) => (isoDate) => {
+      const specialDay = s.items.find(d => d.date === isoDate);
+      if (specialDay) {
+        // Özel gün varsa tüm gün kapalı kabul et
+        return {
+          allDay: true,
+          ranges: [] // Tüm gün kapalıysa saat aralıkları önemsiz
+        };
+      }
+      return {
+        allDay: false,
+        ranges: []
+      };
+    },
   },
   mutations: {
     ADD_SPECIAL_DAY(s, payload) {
