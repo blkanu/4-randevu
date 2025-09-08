@@ -3,6 +3,21 @@
 const state = {
   meetings: [
     {
+      id: 100, // Test meeting
+      title: "Test Toplantısı - Bugün",
+      agenda: "Test amaçlı toplantı",
+      date: "2025-09-08", // Bugünün tarihi
+      startTime: "13:00",
+      endTime: "14:00",
+      roomId: 1, // Toplantı Salonu A
+      ownerId: 1,
+      owner: { id: 1, name: "Ahmet Yılmaz", email: "user@subu.edu.tr" },
+      participants: [2, 3],
+      agendaItems: [{ text: "Test gündemi", userId: 1 }],
+      decisions: [],
+      status: "Onaylandi", // Onaylanmış toplantı
+    },
+    {
       id: 1,
       title: "Akreditasyon Hazırlığı",
       agenda: "Program çıktılarının gözden geçirilmesi",
